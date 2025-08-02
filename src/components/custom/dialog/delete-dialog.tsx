@@ -7,7 +7,6 @@ import {
     AlertDialogFooter,
     AlertDialogHeader,
     AlertDialogTitle,
-    AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { CircleAlert } from 'lucide-react';
 
@@ -18,7 +17,7 @@ interface DeleteDialogProps {
     isLoading?: boolean;
 }
 
-export function DeleteDialog({ open, setOpen, onConfirm, isLoading }: DeleteDialogProps) {
+export function DeleteDialog({ open, setOpen, onConfirm }: DeleteDialogProps) {
     const handleConfirm = async () => {
         await onConfirm();
         setOpen(false);

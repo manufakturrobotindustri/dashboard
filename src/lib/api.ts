@@ -1,7 +1,6 @@
-// File: lib/api.ts
-
 import axios, { AxiosError } from "axios";
 import { getToken } from "@/lib/cookies";
+import type { ApiError } from "@/types/api";
 
 const baseURL =
   import.meta.env.VITE_API_URL || "http://localhost:3000";
@@ -28,15 +27,13 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-
-
 api.interceptors.response.use(
   (response) => response,
   (error: AxiosError) => {
-    const data: any = error.response?.data ?? {};
+    const { message, error: errorMsg } = (error.response?.data ?? {}) as Partial<ApiError> & { error?: string };
     const backendMessage =
-      data.error || data.message || error.message || "Unknown error occurred";
-
+        errorMsg || message || error.message || "Unknown error occurred";
+    
     error.message = backendMessage;
     return Promise.reject(error);
   }
